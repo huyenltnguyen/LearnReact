@@ -1,5 +1,3 @@
-// jshint ignore: start
-
 import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -21,7 +19,7 @@ class App extends Component {
 		this.videoSearch('goldfish');
 	}
 
-	videoSearch(term) {		
+	videoSearch(term) {
 		YTSearch({key: API_KEY, term: term}, (videos) => {
 			this.setState({
 				videos: videos,
@@ -31,7 +29,7 @@ class App extends Component {
 	}
 
 	render() {
-		const videoSearch = _.debounce(term => { this.videoSearch(term) }, 300);
+		const videoSearch = _.debounce(term => this.videoSearch(term), 300);
 
 		return (
 			<div>
@@ -42,7 +40,7 @@ class App extends Component {
 					videos={this.state.videos} />
 			</div>
 		);
-	}	
+	}
 }
 
 
