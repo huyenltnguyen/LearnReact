@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ResourceList = ({ resource }) => {
+const useResources = type => {
   const [resources, setResources] = useState([]);
 
-  const fetchResource = resource => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/${resource}`)
-      .then(res => setResources(res.data));
-  };
-
   useEffect(() => {
-    fetchResource(resource);
-  }, [resource]);
+    (type =>
+      axios
+        .get(`https://jsonplaceholder.typicode.com/${type}`)
+        .then(res => setResources(res.data)))(type);
+  }, [type]);
+
+  return resources;
+};
+
+const ResourceList = ({ type }) => {
+  const resources = useResources(type);
 
   return (
     <ul>
